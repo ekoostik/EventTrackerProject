@@ -1,9 +1,6 @@
 package com.skilldistillery.jobapp.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,11 +12,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CompanyTest {
-	
+class ContactTest {
+
 	private static EntityManagerFactory emf; 
 	private EntityManager em;
-	private Company comp;
+	private Contact contact;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -34,29 +31,24 @@ class CompanyTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		comp = em.find(Company.class, 1);
+		contact = em.find(Contact.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 	em.close();
-	comp = null;
+	contact = null;
 	}
-
+	
+	@Test
+	void test_Contact() {
+		assertNotNull(contact);
+		assertEquals("Jerry", contact.getFirstName());
+	}
+	
 	@Test
 	void test_company_map() {
-		assertNotNull(comp);
-		assertEquals("McDonalds", comp.getName());
+		assertNotNull(contact.getCompany());
+		assertEquals("McDonalds", contact.getCompany().getName());
 	}
-	@Test
-	void test_contactList() {
-		assertNotNull(comp.getContacts());
-		assertFalse(comp.getContacts().isEmpty());
-	}
-	@Test
-	void test_questionList() {
-		assertNotNull(comp.getQuestions());
-		assertFalse(comp.getQuestions().isEmpty());
-	}
-
 }

@@ -7,7 +7,7 @@ import com.skilldistillery.jobapp.entities.Company;
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
 	
-	
+	Company findById(int id);
 	
 	
 }

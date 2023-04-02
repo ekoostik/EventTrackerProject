@@ -8,7 +8,7 @@ public interface CompanyService {
 
 	
 	List<Company> findAll();
-	Company findById();
+	Company findById(int id);
 	Company createCompany(Company comp);
 	Company updateCompany(int id, Company comp);
 	boolean deleteCompany(int id);
