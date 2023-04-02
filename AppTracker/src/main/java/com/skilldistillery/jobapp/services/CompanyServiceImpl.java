@@ -45,10 +45,10 @@ public class CompanyServiceImpl implements CompanyService {
 			}
 
 			toUpdate.setActive(comp.isActive());
-			if(comp.getOffer()!=null) {
+			if (comp.getOffer() != null) {
 				toUpdate.setOffer(comp.getOffer());
 			}
-			
+
 			compRepo.saveAndFlush(toUpdate);
 		}
 		return toUpdate;
