@@ -1,5 +1,6 @@
 package com.skilldistillery.jobapp.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -20,9 +23,16 @@ public class Question {
 	@Column(name="question_asked")
 	private String questionAsked;
 	
+	@ManyToMany
+	@JoinTable(name="Company_has_Question",
+	joinColumns=@JoinColumn(name="Question_id"),
+	inverseJoinColumns=@JoinColumn(name="Company_id"))
+	private List<Company>companies;
+	
+	
 	@ManyToOne
-	@JoinColumn(name="company_id")
-	private Company company;
+	@JoinColumn(name="category_id")
+	private Category category;
 
 	public Question(int id, String questionAsked) {
 		super();
@@ -51,12 +61,22 @@ public class Question {
 		this.questionAsked = questionAsked;
 	}
 
-	public Company getCompany() {
-		return company;
+
+
+	public List<Company> getCompanies() {
+		return companies;
 	}
 
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setCompanies(List<Company> companies) {
+		this.companies = companies;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override

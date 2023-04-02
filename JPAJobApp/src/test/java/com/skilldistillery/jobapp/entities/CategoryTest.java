@@ -2,6 +2,7 @@ package com.skilldistillery.jobapp.entities;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import javax.crypto.AEADBadTagException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,10 +13,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class QuestionTest {
-	private static EntityManagerFactory emf; 
+class CategoryTest {
+
+	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Question question;
+	private Category cat;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -24,35 +26,35 @@ class QuestionTest {
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-	emf.close();
+		emf.close();
 	}
 
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		question = em.find(Question.class, 1);
+		cat = em.find(Category.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-	em.close();
-	question = null;
+		em.close();
+		cat = null;
+
+	}
+	
+	
+	
+	
+	@Test
+	void test_category() {
+		assertNotNull(cat);
+		assertEquals("General", cat.getName());
 	}
 	
 	@Test
-	void test_Question() {
-		assertNotNull(question);
-		assertEquals('W', question.getQuestionAsked().charAt(0));
+	void test_question_map() {
+		assertNotNull(cat.getQuestions());
+		assertFalse(cat.getQuestions().isEmpty());
 	}
-	@Test
-	void test_company_map() {
-		assertNotNull(question.getCompanies());
-		assertFalse(question.getCompanies().isEmpty());
-	
-	}
-	@Test
-	void test_category_map() {
-		assertNotNull(question.getCategory());
-		assertEquals("General", question.getCategory().getName());
-	}
+
 }

@@ -9,7 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -32,28 +35,25 @@ public class Company {
 
 	private boolean active;
 
-	private Double offer;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy="company")
 	private List<Contact>contacts;
+	
+	
 	@JsonIgnore
-	@OneToMany(mappedBy="company")
+	@ManyToMany(mappedBy="companies")
 	private List<Question> questions;
+	
+	@JsonIgnore
+	@OneToOne
+	@JoinColumn(name="Offer_id")
+	private Offer offer;
 	
 	public Company() {
 
 	}
-	
 
-	public Company(int id, String name, LocalDate applyDate, String website, boolean active, Double offer) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.applyDate = applyDate;
-		this.website = website;
-		this.active = active;
-		this.offer = offer;
-	}
 
 
 	public int getId() {
@@ -96,13 +96,7 @@ public class Company {
 		this.active = active;
 	}
 
-	public Double getOffer() {
-		return offer;
-	}
 
-	public void setOffer(Double offer) {
-		this.offer = offer;
-	}
 
 	public List<Contact> getContacts() {
 		return contacts;
@@ -122,6 +116,18 @@ public class Company {
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
+
+
+	public Offer getOffer() {
+		return offer;
+	}
+
+
+
+	public void setOffer(Offer offer) {
+		this.offer = offer;
+	}
+
 
 
 	@Override

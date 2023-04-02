@@ -58,5 +58,11 @@ class CompanyTest {
 		assertNotNull(comp.getQuestions());
 		assertFalse(comp.getQuestions().isEmpty());
 	}
+	@Test
+	void test_offer_map() {
+		assertNotNull(comp.getOffer());
+		assertEquals("full", comp.getOffer().getHealth());
+	}
+	
 
 }
