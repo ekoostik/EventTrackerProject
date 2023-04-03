@@ -3,6 +3,7 @@ package com.skilldistillery.jobapp.services;
 import java.util.List;
 
 import com.skilldistillery.jobapp.entities.Company;
+import com.skilldistillery.jobapp.entities.Question;
 
 public interface CompanyService {
 
@@ -14,4 +15,5 @@ public interface CompanyService {
 	boolean deleteCompany(int id);
 	List<Company> findAllActive(boolean active);
 	List<Company> findAllRemote(boolean remote);
+	List<Question> findAllQuestionsForCompany(int id);
 }

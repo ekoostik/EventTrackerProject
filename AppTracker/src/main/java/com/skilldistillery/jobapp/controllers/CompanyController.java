@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.jobapp.entities.Company;
+import com.skilldistillery.jobapp.entities.Question;
 import com.skilldistillery.jobapp.services.CompanyService;
 
 @RestController
@@ -67,6 +68,7 @@ public class CompanyController {
 	public void deleteCompany(@PathVariable Integer id, HttpServletResponse resp) {
 		try {
 			if (compSrvc.deleteCompany(id)) {
+				
 				resp.setStatus(200);
 			} else {
 				resp.setStatus(204);
@@ -93,6 +95,11 @@ public class CompanyController {
 				company = null;
 			}
 			return company;
+	}
+	@GetMapping("company/{id}/questions")
+	public List<Question> findAllQuestionsForCompany(@PathVariable Integer id){
+		
+		return compSrvc.findAllQuestionsForCompany(id);
 	}
 	
 

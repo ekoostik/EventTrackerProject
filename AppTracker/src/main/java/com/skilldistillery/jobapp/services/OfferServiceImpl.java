@@ -36,9 +36,10 @@ public class OfferServiceImpl implements OfferService {
 	@Override
 	public Offer createOffer(int id, Offer offer) {
 		Company comp = compRepo.findById(id);
-		offer.setId(id);
 		comp.setOffer(offer);
+		
 		offRepo.saveAndFlush(offer);
+		compRepo.saveAndFlush(comp);
 		return offer;
 	}
 
@@ -69,10 +70,10 @@ public class OfferServiceImpl implements OfferService {
 	@Override
 	public boolean deleteOffer(int id) {
 		boolean didDelete = false;
-		Company comp = compRepo.findById(id);
-		Offer toDelete=comp.getOffer();
+		Offer toDelete=offRepo.findById(id);
+		Company comp = compRepo.findById(toDelete.getCompany().getId());
+		comp.setOffer(null);
 		if (toDelete != null) {
-			comp.setOffer(null);
 			offRepo.delete(toDelete);
 			didDelete = true;
 		}

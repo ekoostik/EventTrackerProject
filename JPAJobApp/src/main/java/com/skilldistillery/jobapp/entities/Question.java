@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Question {
 
@@ -23,13 +25,14 @@ public class Question {
 	@Column(name="question_asked")
 	private String questionAsked;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="Company_has_Question",
 	joinColumns=@JoinColumn(name="Question_id"),
 	inverseJoinColumns=@JoinColumn(name="Company_id"))
 	private List<Company>companies;
 	
-	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="category_id")
 	private Category category;
