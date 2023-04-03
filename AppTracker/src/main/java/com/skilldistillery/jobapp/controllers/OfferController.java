@@ -16,57 +16,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.jobapp.entities.Company;
-import com.skilldistillery.jobapp.services.CompanyService;
+import com.skilldistillery.jobapp.entities.Offer;
+import com.skilldistillery.jobapp.services.OfferService;
 
 @RestController
 @RequestMapping("api")
-public class CompanyController {
+public class OfferController {
 	@Autowired
-	private CompanyService compSrvc;
-
-	@GetMapping("companies")
-	public List<Company> findAllCompanies() {
-
-		return compSrvc.findAll();
+	private OfferService offSrvc;
+	
+	
+	
+	@GetMapping("offers")
+	public List<Offer> findAll(){
+		return offSrvc.findAll();
 	}
-
-	@GetMapping("company/{id}")
-	public Company findCompanyById(@PathVariable Integer id) {
-
-		return compSrvc.findById(id);
+	
+	@GetMapping("offer/company/{id}")
+	public Offer findCompanyOffer(@PathVariable Integer id) {
+		return offSrvc.findByCompanyOfferId(id);
 	}
-	@GetMapping("company/search/active/{active}")
-	public List<Company> findCompanyByActive(@PathVariable Boolean active) {
-		
-		return compSrvc.findAllActive(active);
-	}
-	@GetMapping("company/search/remote/{remote}")
-	public List<Company> findCompanyByRemote(@PathVariable Boolean remote) {
-		
-		return compSrvc.findAllRemote(remote);
-	}
-
-	@PostMapping("add/company")
-	public Company addCompany(@RequestBody Company company, HttpServletRequest req, HttpServletResponse resp) {
+	
+	@PostMapping("company/{id}/offer")
+	public Offer addOffer(@PathVariable Integer id, @RequestBody Offer offer, HttpServletResponse resp, HttpServletRequest req ) {
 		try {
-			compSrvc.createCompany(company);
-			if (company == null) {
+			offer = offSrvc.createOffer(id, offer);
+			if (offer == null) {
 				resp.setStatus(404);
 			} else {
 				resp.setStatus(201);
+				resp.setHeader("Location", req.getRequestURL().append("/").append(offer.getId()).toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.setStatus(400);
-			company = null;
+			offer = null;
 		}
-		return company;
-	}
 
-	@DeleteMapping("delete/company/{id}")
+		return offer;
+	}
+	
+	
+	
+	@DeleteMapping("delete/offer/{id}")
 	public void deleteCompany(@PathVariable Integer id, HttpServletResponse resp) {
 		try {
-			if (compSrvc.deleteCompany(id)) {
+			if (offSrvc.deleteOffer(id)) {
 				resp.setStatus(200);
 			} else {
 				resp.setStatus(204);
@@ -77,23 +72,30 @@ public class CompanyController {
 
 		}
 	}
-	
-	
-	@PutMapping("update/company/{id}")
-	public Company updateCompany(@PathVariable Integer id, @RequestBody Company company, HttpServletResponse resp) {
+	@PutMapping("update/offer/{id}")
+	public Offer updateOffer(@PathVariable Integer id, @RequestBody Offer offer, HttpServletResponse resp) {
 		
 		try {
-			 company = compSrvc.updateCompany(id, company);
-			if(company ==null) {
+			 offer = offSrvc.updateOffer(id, offer);
+			if(offer ==null) {
 				resp.setStatus(404);
 			}
 			}catch(Exception e){
 				e.printStackTrace();
 				resp.setStatus(400);
-				company = null;
+				offer = null;
 			}
-			return company;
+			return offer;
 	}
+	
+
+
+	
+	
+	
+	
+	
+	
 	
 
 }

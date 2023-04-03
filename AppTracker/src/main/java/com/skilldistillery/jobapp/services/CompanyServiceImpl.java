@@ -45,7 +45,6 @@ public class CompanyServiceImpl implements CompanyService {
 			}
 
 			toUpdate.setActive(comp.isActive());
-			
 
 			compRepo.saveAndFlush(toUpdate);
 		}
@@ -62,6 +61,18 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 
 		return didDelete;
+	}
+
+	@Override
+	public List<Company> findAllActive(boolean active) {
+
+		return compRepo.findByActive(active);
+	}
+
+	@Override
+	public List<Company> findAllRemote(boolean remote) {
+
+		return compRepo.findByRemote(remote);
 	}
 
 }

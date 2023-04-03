@@ -34,6 +34,8 @@ public class Company {
 	private String website;
 
 	private boolean active;
+	
+	private boolean remote;
 
 	
 	@JsonIgnore
@@ -126,6 +128,18 @@ public class Company {
 
 	public void setOffer(Offer offer) {
 		this.offer = offer;
+	}
+
+
+
+	public boolean isRemote() {
+		return remote;
+	}
+
+
+
+	public void setRemote(boolean remote) {
+		this.remote = remote;
 	}
 
 

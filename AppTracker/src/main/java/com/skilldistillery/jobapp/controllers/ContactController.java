@@ -81,5 +81,16 @@ public class ContactController {
 		}
 		return contact;
 	}
+	
+	@GetMapping("contact/search/company/{companyId}")
+	public List<Contact> findContactByCompanyId(@PathVariable Integer companyId) {
+		
+		return contSrvc.findContactByCompany(companyId);
+		
+	}
+	@GetMapping("contact/search/name/{lastName}")
+	public List<Contact> findContactByLastName(@PathVariable String lastName){
+		return contSrvc.findByLastName(lastName);
+	}
 
 }

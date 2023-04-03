@@ -12,4 +12,6 @@ public interface CompanyService {
 	Company createCompany(Company comp);
 	Company updateCompany(int id, Company comp);
 	boolean deleteCompany(int id);
+	List<Company> findAllActive(boolean active);
+	List<Company> findAllRemote(boolean remote);
 }

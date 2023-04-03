@@ -68,4 +68,15 @@ public class ContactServiceImpl implements ContactService {
 		return didDelete;
 	}
 
+	@Override
+	public List <Contact> findContactByCompany(int id) {
+		return contRepo.findByCompany_Id(id);
+	}
+
+	@Override
+	public List<Contact> findByLastName(String lastname) {
+		lastname= "%" + lastname + "%";
+		return contRepo.findByLastNameLike(lastname);
+	}
+
 }
