@@ -33,7 +33,7 @@ I really enjoy the building of more complicated  controller operations and Servi
 |GET|`/api/offer/company/1`| view offer by company|
 |POST|`/api/company/2/offer`| create offer for company|
 |PUT|`/api/update/offer/1`| update offer|
-|DELETE/`api/delete/offer/1`| delete offer|
+|DELETE|`api/delete/offer/1`| delete offer|
 |GET|`/api/companies`| view all companies|
 |GET|`/api/company/search/active/true`| view all active companies|
 |GET|`/api/company/1`| view company by id|
