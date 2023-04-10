@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Job App</title>
+<script type="text/javascript" src="js/script.js"></script>
+</head>
+<style>
+.company{
+margin-top: 0px;
+margin-left: 300px;
+border: 1px solid black;
+border-collapse: collapse;
+ position: absolute
+}
+
+.addCompany{
+border: 1px solid black;
+border-collapse: collapse;
+  padding:30px;
+}
+
+.updateCompany{
+
+border: 1px solid black;
+border-collapse: collapse;
+
+}
+
+</style>
+<body>
+	<h1>Job Application Tracker</h1>
+	<div id="aggregationData">
+	
+	<table>
+			
+			<tbody id="aggCountBody"></tbody>
+		</table>
+	
+	
+	
+	
+	
+	
+	
+	</div>
+	<div id="compListDiv" class="listCompanys">
+
+		<table>
+			<thead>
+				<tr id="compListHead">
+					<th>ID</th>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody id="compListTbody"></tbody>
+		</table>
+
+
+	</div>
+
+	<div id="company" class="company">
+	
+	
+		<table>
+			<tbody id="companyBody"></tbody>
+		</table>
+	
+	
+	
+	</div>
+	
+	<div id="updateCompany" class="updateCompany">
+	
+	<form name="updateForm">
+	<label for="id">Id</label>
+  	<input type="number" name="id" >
+  	<br>
+  	<label for="name">Company Name</label>
+  	<input type="text" name="name" >
+  	<br>
+  	<label for="applyDate">Date Applied</label>
+  	<input type="Date" name="applyDate">
+  	<br>
+  	<label for="website">Company website url</label>
+  	<input type="url" name="website">
+  	<br>
+  	<label for="remote">Remote Work</label>
+  	<input type="checkbox" name="remote">
+  	<br>
+  	<button name="submit">Update</button>
+  
+  
+  </form>
+
+	
+	</div>
+
+
+
+<div id="addCompany" class="addCompany">
+
+<form name="addCompanyForm">
+  	<label for="name">Company Name</label>
+  	<input type="text" name="name" >
+  	<br>
+  	<label for="applyDate">Date Applied</label>
+  	<input type="Date" name="applyDate">
+  	<br>
+  	<label for="website">Company website url</label>
+  	<input type="url" name="website">
+  	<br>
+  	<label for="remote">Remote Work</label>
+  	<input type="checkbox" name="remote">
+  	<br>
+  	<button name="submit">Add Company</button>
+  
+  
+  </form>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

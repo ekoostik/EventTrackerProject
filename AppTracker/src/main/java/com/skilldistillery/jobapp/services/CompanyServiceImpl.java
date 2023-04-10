@@ -74,7 +74,6 @@ public class CompanyServiceImpl implements CompanyService {
 			}
 			if (!toDelete.getContacts().isEmpty()) {
 				List<Contact> contacts = contRepo.findByCompany_Id(toDelete.getId());
-
 				toDelete.setContacts(null);
 				for (Contact contact : contacts) {
 					contRepo.delete(contact);
