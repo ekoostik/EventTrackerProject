@@ -5,6 +5,7 @@ This application allows a user to track information related to a job application
 
 ## Technologies Used
 Spring Tool Suite, Spring Data JPA/REST, MySQL Workbench, Gradle, Java.
+JavaScript.
 
 ## Lessons Learned
 
@@ -12,6 +13,8 @@ This project was my first using Spring REST and the JPA Repository Interface.
 Along with that came the implementation of JSON and testing through Postman.
 I continued learning about CRUD operations and the relationship between parent/child dependencies. Most of my trouble shooting involved Delete operations when child dependencies existed. 
 I really enjoy the building of more complicated  controller operations and ServiceImpl methods.
+
+This was my first implementation of JavaScript in a project. Using Event Listeners on delete, update, and add buttons to communicate to the Java Controllers and perform CRUD operations on the Company entity. I also used JavaScript to dynamically  build a company display table. I would like to improve my function syntax to better use a single function for multiple uses. 
 
 ## Paths
 
