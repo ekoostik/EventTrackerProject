@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,12 +20,13 @@ import com.skilldistillery.jobapp.services.ContactService;
 
 @RestController
 @RequestMapping("api")
+@CrossOrigin({"*", "http://localhost/"})
 public class ContactController {
 
 	@Autowired
 	private ContactService contSrvc;
 
-	@GetMapping("contacts")
+	@GetMapping("contact")
 	public List<Contact> findAllContacts() {
 		return contSrvc.findAll();
 	}
@@ -34,7 +36,7 @@ public class ContactController {
 		return contSrvc.findById(id);
 	}
 
-	@PostMapping("add/contact")
+	@PostMapping("contact")
 	public Contact addContact(@RequestBody Contact contact, HttpServletResponse resp) {
 		try {
 			contSrvc.createContact(contact);
@@ -51,7 +53,7 @@ public class ContactController {
 		return contact;
 	}
 
-	@DeleteMapping("delete/contact/{id}")
+	@DeleteMapping("contact/{id}")
 	public void deleteContact(@PathVariable Integer id, HttpServletResponse resp) {
 		try {
 			if (contSrvc.deleteContact(id)) {
@@ -66,7 +68,7 @@ public class ContactController {
 		}
 	}
 
-	@PutMapping("update/contact/{id}")
+	@PutMapping("contact")
 	public Contact updateContact(@PathVariable Integer id, @RequestBody Contact contact, HttpServletResponse resp) {
 
 		try {
@@ -82,13 +84,13 @@ public class ContactController {
 		return contact;
 	}
 	
-	@GetMapping("contact/search/company/{companyId}")
-	public List<Contact> findContactByCompanyId(@PathVariable Integer companyId) {
+	@GetMapping("contact/company/{id}")
+	public List<Contact> findContactByCompanyId(@PathVariable Integer id) {
 		
-		return contSrvc.findContactByCompany(companyId);
+		return contSrvc.findContactByCompany(id);
 		
 	}
-	@GetMapping("contact/search/name/{lastName}")
+	@GetMapping("contact/name")
 	public List<Contact> findContactByLastName(@PathVariable String lastName){
 		return contSrvc.findByLastName(lastName);
 	}

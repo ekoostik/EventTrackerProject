@@ -1,11 +1,11 @@
 # EventTrackerProject
 
 ## Description
-This application allows a user to track information related to a job application. Including company details, contact information, interview questions, and offer details. 
+This application allows a user to track information related to a job application. Including company details and contact information. 
 
 ## Technologies Used
 Spring Tool Suite, Spring Data JPA/REST, MySQL Workbench, Gradle, Java.
-JavaScript.
+JavaScript. Angular
 
 ## Lessons Learned
 
@@ -15,6 +15,8 @@ I continued learning about CRUD operations and the relationship between parent/c
 I really enjoy the building of more complicated  controller operations and ServiceImpl methods.
 
 This was my first implementation of JavaScript in a project. Using Event Listeners on delete, update, and add buttons to communicate to the Java Controllers and perform CRUD operations on the Company entity. I also used JavaScript to dynamically  build a company display table. I would like to improve my function syntax to better use a single function for multiple uses. 
+
+I made the addition of an Angular front end using typescript and Visual Studio Code. I made use of Components to hold my function logic and work with the Service through the subscribe method. Models, which held my entity. Pipes, which I used to manipulate data to calculate the active count. And, a Service which I used to communicate to the back end through HttpClient.   
 
 ## Paths
 
@@ -40,6 +42,6 @@ This was my first implementation of JavaScript in a project. Using Event Listene
 |GET|`/api/companies`| view all companies|
 |GET|`/api/company/search/active/true`| view all active companies|
 |GET|`/api/company/1`| view company by id|
-|POST|`/api/add/company`| create company|
-|PUT|`/api/update/company/1`| update company
-|DELETE|`/api/delete/company/1`| delete company
+|POST|`/api/company`| create company|
+|PUT|`/api/company`| update company
+|DELETE|`/api/company/1`| delete company

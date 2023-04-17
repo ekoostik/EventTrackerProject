@@ -147,7 +147,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jobdb`;
-INSERT INTO `Offer` (`id`, `Salary`, `health`, `dental`, `overtime`, `holidays`) VALUES (1, 50000, 'full', 'partial', 'double time', '6');
+INSERT INTO `Offer` (`id`, `Salary`, `health`, `dental`, `overtime`, `holidays`) VALUES (1, 50000, 'Full', 'Partial', 'double time', '6');
+INSERT INTO `Offer` (`id`, `Salary`, `health`, `dental`, `overtime`, `holidays`) VALUES (2, 100000, 'Full', 'Full', '', '10');
+INSERT INTO `Offer` (`id`, `Salary`, `health`, `dental`, `overtime`, `holidays`) VALUES (3, 75000, 'Full', NULL, 'double time', '10');
+INSERT INTO `Offer` (`id`, `Salary`, `health`, `dental`, `overtime`, `holidays`) VALUES (4, 65000, 'Full', NULL, 'double time', '5');
 
 COMMIT;
 
@@ -158,6 +161,11 @@ COMMIT;
 START TRANSACTION;
 USE `jobdb`;
 INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`, `Offer_id`) VALUES (1, 'McDonalds', '2023-01-01', NULL, true, true, 1);
+INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`, `Offer_id`) VALUES (2, 'Shotgun Willies Web Services', '2021-03-31', NULL, false, false, NULL);
+INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`, `Offer_id`) VALUES (3, 'Foogle', '2022-02-22', NULL, true, false, 2);
+INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`, `Offer_id`) VALUES (4, 'Crockets Java Pro', '2023-01-20', NULL, true, true, 3);
+INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`, `Offer_id`) VALUES (5, 'Dill Skstillery', '2023-04-29', NULL, true, true, 4);
+INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`, `Offer_id`) VALUES (6, 'Eggolo', '2023-04-28', NULL, false, true, NULL);
 
 COMMIT;
 
@@ -167,7 +175,15 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jobdb`;
-INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (1, 'Jerry', 'Main', '992-388-0184', 'Jerry@theMac.com', NULL, 1);
+INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (1, 'Jerry', 'Main', '992-388-0184', 'Jerry@theMac.com', 'Recruiter ', 1);
+INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (2, 'Willy', 'Williamson', '555-555-5555', 'Willy@yeehaw.com', 'Big boss man', 2);
+INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (3, 'Wendy', 'Williamson', '555-555-5556', 'MrsWilly@yeehaw.com', 'CEO', 2);
+INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (4, 'Ronald ', 'Donald', '992-622-8377', NULL, 'Founder', 1);
+INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (5, 'Parry', 'Lage', '740-207-3443', 'lageP@foogle.com', NULL, 3);
+INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (6, 'Davy', 'Crocket', NULL, 'king@gmail.com', 'King of the wild frontier ', 4);
+INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (7, 'Bob', 'Dobbs', NULL, 'bob@skd.com', 'Lead Developer ', 5);
+INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (8, 'Eric', 'Clucks', NULL, 'cluck@roost.com', 'Chicken wrangler ', 5);
+INSERT INTO `Contact` (`id`, `first_name`, `last_name`, `phone`, `email`, `title`, `Company_id`) VALUES (9, 'Bergey ', 'Srin', '800-555-5235', 'bergeyS@eggolo.com', 'Founder', 6);
 
 COMMIT;
 
@@ -181,6 +197,7 @@ INSERT INTO `Category` (`id`, `name`) VALUES (1, 'General');
 INSERT INTO `Category` (`id`, `name`) VALUES (2, 'Java Basics');
 INSERT INTO `Category` (`id`, `name`) VALUES (3, 'HTML');
 INSERT INTO `Category` (`id`, `name`) VALUES (4, 'JavaScript');
+INSERT INTO `Category` (`id`, `name`) VALUES (5, 'OOP');
 
 COMMIT;
 
@@ -192,6 +209,12 @@ START TRANSACTION;
 USE `jobdb`;
 INSERT INTO `Question` (`id`, `question_asked`, `Category_id`) VALUES (1, 'What are the four pillars of programming ', 1);
 INSERT INTO `Question` (`id`, `question_asked`, `Category_id`) VALUES (2, 'What is a JavaScript function', 4);
+INSERT INTO `Question` (`id`, `question_asked`, `Category_id`) VALUES (3, 'What is an Access Modifier', 2);
+INSERT INTO `Question` (`id`, `question_asked`, `Category_id`) VALUES (4, 'What do JavaScript Events trigger?', 4);
+INSERT INTO `Question` (`id`, `question_asked`, `Category_id`) VALUES (5, 'Name three parts of an HTML file', 3);
+INSERT INTO `Question` (`id`, `question_asked`, `Category_id`) VALUES (6, 'How to center a Div', 3);
+INSERT INTO `Question` (`id`, `question_asked`, `Category_id`) VALUES (7, 'What is inheritance', 1);
+INSERT INTO `Question` (`id`, `question_asked`, `Category_id`) VALUES (8, 'What is polymorphism ', 1);
 
 COMMIT;
 

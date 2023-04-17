@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +22,12 @@ import com.skilldistillery.jobapp.services.CompanyService;
 
 @RestController
 @RequestMapping("api")
+@CrossOrigin({"*", "http://localhost/"})
 public class CompanyController {
 	@Autowired
 	private CompanyService compSrvc;
 
-	@GetMapping("companies")
+	@GetMapping("company")
 	public List<Company> findAllCompanies() {
 
 		return compSrvc.findAll();
@@ -36,18 +38,18 @@ public class CompanyController {
 
 		return compSrvc.findById(id);
 	}
-	@GetMapping("company/search/active/{active}")
+	@GetMapping("company/{active}")
 	public List<Company> findCompanyByActive(@PathVariable Boolean active) {
 		
 		return compSrvc.findAllActive(active);
 	}
-	@GetMapping("company/search/remote/{remote}")
+	@GetMapping("company/remote/{remote}")
 	public List<Company> findCompanyByRemote(@PathVariable Boolean remote) {
 		
 		return compSrvc.findAllRemote(remote);
 	}
 
-	@PostMapping("add/company")
+	@PostMapping("company")
 	public Company addCompany(@RequestBody Company company, HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			compSrvc.createCompany(company);
@@ -64,7 +66,7 @@ public class CompanyController {
 		return company;
 	}
 
-	@DeleteMapping("delete/company/{id}")
+	@DeleteMapping("company/{id}")
 	public void deleteCompany(@PathVariable Integer id, HttpServletResponse resp) {
 		try {
 			if (compSrvc.deleteCompany(id)) {
@@ -81,7 +83,7 @@ public class CompanyController {
 	}
 	
 	
-	@PutMapping("update/company/{id}")
+	@PutMapping("company")
 	public Company updateCompany(@PathVariable Integer id, @RequestBody Company company, HttpServletResponse resp) {
 		
 		try {
