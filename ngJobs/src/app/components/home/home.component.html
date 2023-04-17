@@ -1,6 +1,115 @@
-<h1>Company List</h1>
 
-<ul>
-<li *ngFor="let comp of companies">{{comp.name}}</li>
+<div class="table table-striped" *ngIf="selected === null && !addCompany">
+  <table class="table table-striped" >
+  <thead>
+    <tr>
+      <td>Id</td>
+      <td>Name</td>
+      <td>Apply Date</td>
+      <td>Active</td>
 
-</ul>
+    </tr>
+  </thead>
+  <tbody>
+    <tr  (click)="selectCompany(company)" *ngFor="let company of companies">
+      <td>{{company.id}}</td>
+      <td>{{company.name}}</td>
+      <td>{{company.applyDate}}</td>
+      <td><input (change)="updateCompany(company)" type="checkbox" name="active" [(ngModel)]="company.active"></td>
+      <td></td>
+    </tr>
+
+  </tbody>
+</table>
+<button (click)="loadAddCompForm()">Add New Company</button>
+</div>
+
+<div name="newCompanyDiv">
+<form *ngIf="!selected && addCompany">
+
+  <table class="table table-striped" >
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Website</td>
+        <td>Apply Date</td>
+        <td>Remote ?</td>
+        <td>Active ?</td>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="text" name="name" [(ngModel)]="newCompany.name"></td>
+        <td><input type="text" name="website" [(ngModel)]="newCompany.website"></td>
+        <td><input type="date" name="applyDate" [(ngModel)]="newCompany.applyDate"></td>
+        <td><input type="checkbox" name="remote" [(ngModel)]="newCompany.remote"></td>
+        <td><input type="checkbox" name="active" [(ngModel)]="newCompany.active"></td>
+        <td></td>
+      </tr>
+      <input type="submit" value="Add Item" (click)="createCompany(newCompany)"/>
+    </tbody>
+  </table>
+</form>
+</div>
+
+<div class="table table-striped" *ngIf="selected && !addCompany">
+  <table class="table table-striped" >
+  <thead>
+    <tr>
+      <td>Id</td>
+      <td>Name</td>
+      <td>Website</td>
+      <td>Apply Date</td>
+      <td>Remote</td>
+      <td>Active</td>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{selected.id}}</td>
+      <td>{{selected.name}}</td>
+      <td>{{selected.website}}</td>
+      <td>{{selected.applyDate}}</td>
+      <td>{{selected.remote}}</td>
+      <td><input (change)="updateCompany(selected)" type="checkbox" name="active" [(ngModel)]="selected.active"></td>
+      </tr>
+      <tr *ngFor="let contact of selected.contacts" >
+        <td>{{contact.firstName}} {{contact.lastName}}</td>
+      </tr>
+
+  </tbody>
+</table>
+<button (click)="deleteCompany(selected.id)">Delete Company</button>  <button (click)="setEditCompany()">Update Company</button>
+</div>
+
+<div name="updateCompanyDiv">
+  <form *ngIf="editCompany">
+
+    <table class="table table-striped" >
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Website</td>
+
+          <td>Remote ?</td>
+          <td>Active ?</td>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" name="name" [(ngModel)]="editCompany.name"></td>
+          <td><input type="text" name="website" [(ngModel)]="editCompany.website"></td>
+
+          <td><input type="checkbox" name="remote" [(ngModel)]="editCompany.remote"></td>
+          <td><input type="checkbox" name="active" [(ngModel)]="editCompany.active"></td>
+          <td></td>
+        </tr>
+        <button (click)="reload()">Cancel</button>
+        <button (click)="updateCompany(editCompany)">Save</button>
+      </tbody>
+    </table>
+  </form>
+  </div>
