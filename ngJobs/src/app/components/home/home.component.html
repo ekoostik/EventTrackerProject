@@ -1,3 +1,8 @@
+<h1>
+   <span> Active Company Count: {{companyCount() }}</span>
+
+</h1><br>
+
 
 <div class="table table-striped" *ngIf="selected === null && !addCompany">
   <table class="table table-striped" >
@@ -11,17 +16,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr  (click)="selectCompany(company)" *ngFor="let company of companies">
-      <td>{{company.id}}</td>
-      <td>{{company.name}}</td>
+    <tr   *ngFor="let company of companies">
+      <td >{{company.id}}</td>
+      <td (click)="selectCompany(company)">{{company.name}}</td>
       <td>{{company.applyDate}}</td>
-      <td><input (change)="updateCompany(company)" type="checkbox" name="active" [(ngModel)]="company.active"></td>
+      <td *ngIf="company.active">YES</td>
       <td></td>
     </tr>
 
   </tbody>
 </table>
 <button (click)="loadAddCompForm()">Add New Company</button>
+<!-- <button [(ngModel)]="showActive">Show only Active</button> -->
 </div>
 
 <div name="newCompanyDiv">
@@ -48,6 +54,7 @@
         <td></td>
       </tr>
       <input type="submit" value="Add Item" (click)="createCompany(newCompany)"/>
+      <button (click)="cancel()">Cancel</button>
     </tbody>
   </table>
 </form>
@@ -57,7 +64,6 @@
   <table class="table table-striped" >
   <thead>
     <tr>
-      <td>Id</td>
       <td>Name</td>
       <td>Website</td>
       <td>Apply Date</td>
@@ -68,20 +74,40 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{selected.id}}</td>
+
       <td>{{selected.name}}</td>
       <td>{{selected.website}}</td>
       <td>{{selected.applyDate}}</td>
       <td>{{selected.remote}}</td>
-      <td><input (change)="updateCompany(selected)" type="checkbox" name="active" [(ngModel)]="selected.active"></td>
+      <td>{{selected.active}}</td>
       </tr>
-      <tr *ngFor="let contact of selected.contacts" >
-        <td>{{contact.firstName}} {{contact.lastName}}</td>
-      </tr>
+      <table class="table table-striped" >
+        <thead>
+          <h3>Contacts:</h3>
+          <tr>
+            <td>Title: </td>
+            <td>Name: </td>
+            <td>Phone: </td>
+            <td>Email </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contact of selected.contacts" >
+            <td>{{contact.title}}</td>
+            <td>{{contact.firstName}} {{contact.lastName}}</td>
+            <td> {{contact.phone}}</td>
+            <td> {{contact.email}}</td>
+            </tr>
+        </tbody>
+      </table>
 
   </tbody>
+  <tfoot *ngIf="!hideButton">
+  <button (click)="deleteCompany(selected.id)">Delete Company</button>
+  <button (click)="setEditCompany()">Update Company</button>
+  <button (click)="cancel()">Cancel</button>
+</tfoot>
 </table>
-<button (click)="deleteCompany(selected.id)">Delete Company</button>  <button (click)="setEditCompany()">Update Company</button>
 </div>
 
 <div name="updateCompanyDiv">
@@ -89,6 +115,7 @@
 
     <table class="table table-striped" >
       <thead>
+        <h4>Edit Company</h4>
         <tr>
           <td>Name</td>
           <td>Website</td>
@@ -107,7 +134,7 @@
           <td><input type="checkbox" name="active" [(ngModel)]="editCompany.active"></td>
           <td></td>
         </tr>
-        <button (click)="reload()">Cancel</button>
+        <button (click)="cancel()">Cancel</button>
         <button (click)="updateCompany(editCompany)">Save</button>
       </tbody>
     </table>

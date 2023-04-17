@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from 'src/app/models/company';
 import { CompanyService } from 'src/app/services/company.service';
-
+import { ContactService } from 'src/app/services/contact.service';
+import { ActivePipe } from './../../pipes/active.pipe';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,16 +13,17 @@ export class HomeComponent {
 
 
 
-constructor( private compServ: CompanyService, private route: ActivatedRoute,
-  private router: Router ){}
+constructor( private compServ: CompanyService, private contactSrvc: ContactService ,private route: ActivatedRoute,
+  private router: Router, private active: ActivePipe ){}
 
 
-selected: Company | null = null;
+selected: Company | null  = null;
 newCompany: Company = new Company();
 companies: Company[]=[];
 editCompany: Company | null = null;
 showActive = false;
 addCompany = false;
+hideButton = false;
 
 ngOnInit(): void {
   this.reload();
@@ -42,13 +44,23 @@ reload(){
 
 selectCompany(comp: Company){
   this.selected = comp;
+  // console.log(comp.id)
+  this.contactSrvc.showForCompany(comp.id).subscribe({
+    next:(contacts)=>{
+      if(this.selected != null)
+      this.selected.contacts=contacts;
+    }
+
+  })
 }
 
 createCompany(company: Company){
   this.compServ.create(company).subscribe({
     next:(comp)=>{
+
+      this.addCompany=false;
       this.newCompany= new Company();
-      this.reload()
+      this.reload();
     }
   })
 
@@ -60,7 +72,8 @@ createCompany(company: Company){
  updateCompany(company:Company){
   this.compServ.update(company).subscribe({
     next:(comp)=>{
-      this.reload();
+
+      this.cancel();
     },
     error: (failure) => {
       console.error('Error getting company list');
@@ -72,6 +85,7 @@ createCompany(company: Company){
  deleteCompany(id: number){
   this.compServ.destroy(id).subscribe({
     next:()=>{
+      this.selected=null;
       this.reload();
     },
     error: (failure) => {
@@ -81,32 +95,42 @@ createCompany(company: Company){
   })
  }
 
- showCompany(id:number){
-  this.compServ.show(id).subscribe({
-    next:(company)=>{
-      if(company === null){
-        this.router.navigateByUrl('opps')
-      }else{
-        this.selected=company;
-      }
-    },
-    error: (failure) => {
-      console.error('Error getting company');
-      console.error(failure);
 
-    }
-
-  })
-
- }
 
  loadAddCompForm(){
   this.addCompany=true;
  }
 
  setEditCompany(){
+  this.hideButton=true;
   this.editCompany = Object.assign({}, this.selected)
  }
+
+ cancel(){
+  this.editCompany=null;
+  this.selected=null;
+  this.addCompany=false;
+  this.newCompany=new Company();
+  this.hideButton=false;
+  this.reload();
+
+}
+
+companyContacts(id: number){
+  this.contactSrvc.showForCompany(id).subscribe({
+    next:(contacts)=>{
+      if(this.selected != null)
+      this.selected.contacts=contacts;
+    }
+
+  })
+
+}
+
+companyCount(){
+  return this.active.transform(this.companies, this.showActive).length
+}
+
 
 
 

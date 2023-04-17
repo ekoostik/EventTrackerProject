@@ -66,6 +66,7 @@ export class CompanyService {
 
  }
  show(id:number): Observable<Company>{
+  console.log(id)
   return this.http.get<Company>(this.url+"/"+ id).pipe(
     catchError((err: any) => {
       console.log(err);
