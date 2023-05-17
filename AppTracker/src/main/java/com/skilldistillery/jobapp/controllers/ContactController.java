@@ -1,5 +1,6 @@
 package com.skilldistillery.jobapp.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,18 +27,23 @@ public class ContactController {
 	@Autowired
 	private ContactService contSrvc;
 
-	@GetMapping("contact")
+	@GetMapping("contacts")
 	public List<Contact> findAllContacts() {
 		return contSrvc.findAll();
 	}
 
 	@GetMapping("contact/{id}")
-	public Contact findById(@PathVariable Integer id) {
+	public Contact findById(Principal principal, @PathVariable Integer id) {
 		return contSrvc.findById(id);
+	}
+	
+	@GetMapping("contacts/{username}")
+	public List<Contact> findUsersContacts(Principal principal, @PathVariable String username, HttpServletResponse resp  ){
+		return contSrvc.findByUsername(username);
 	}
 
 	@PostMapping("contact")
-	public Contact addContact(@RequestBody Contact contact, HttpServletResponse resp) {
+	public Contact addContact(Principal principal, @RequestBody Contact contact, HttpServletResponse resp) {
 		try {
 			contSrvc.createContact(contact);
 			if (contact == null) {
@@ -54,7 +60,7 @@ public class ContactController {
 	}
 
 	@DeleteMapping("contact/{id}")
-	public void deleteContact(@PathVariable Integer id, HttpServletResponse resp) {
+	public void deleteContact(Principal principal, @PathVariable Integer id, HttpServletResponse resp) {
 		try {
 			if (contSrvc.deleteContact(id)) {
 				resp.setStatus(200);
@@ -69,7 +75,7 @@ public class ContactController {
 	}
 
 	@PutMapping("contact")
-	public Contact updateContact(@PathVariable Integer id, @RequestBody Contact contact, HttpServletResponse resp) {
+	public Contact updateContact(Principal principal, @PathVariable Integer id, @RequestBody Contact contact, HttpServletResponse resp) {
 
 		try {
 			contact = contSrvc.updateContact(id, contact);
@@ -85,13 +91,13 @@ public class ContactController {
 	}
 	
 	@GetMapping("contact/company/{id}")
-	public List<Contact> findContactByCompanyId(@PathVariable Integer id) {
+	public List<Contact> findContactByCompanyId(Principal principal, @PathVariable Integer id) {
 		
 		return contSrvc.findContactByCompany(id);
 		
 	}
 	@GetMapping("contact/name")
-	public List<Contact> findContactByLastName(@PathVariable String lastName){
+	public List<Contact> findContactByLastName(Principal principal, @PathVariable String lastName){
 		return contSrvc.findByLastName(lastName);
 	}
 

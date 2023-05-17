@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -38,7 +39,7 @@ public class Company {
 	private boolean remote;
 
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@OneToMany(mappedBy="company")
 	private List<Contact>contacts;
 	
@@ -48,9 +49,15 @@ public class Company {
 	private List<Question> questions;
 	
 	@JsonIgnore
-	@OneToOne
-	@JoinColumn(name="Offer_id")
-	private Offer offer;
+	@OneToMany(mappedBy="company")
+	private List<Offer> offers;
+	
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name="User_has_Company",
+	joinColumns=@JoinColumn(name="Company_id"),
+	inverseJoinColumns=@JoinColumn(name="User_id"))
+	private List<User> users;
 	
 	public Company() {
 
@@ -120,14 +127,17 @@ public class Company {
 	}
 
 
-	public Offer getOffer() {
-		return offer;
+
+
+
+	public List<Offer> getOffers() {
+		return offers;
 	}
 
 
 
-	public void setOffer(Offer offer) {
-		this.offer = offer;
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
 	}
 
 
@@ -140,6 +150,18 @@ public class Company {
 
 	public void setRemote(boolean remote) {
 		this.remote = remote;
+	}
+
+
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 

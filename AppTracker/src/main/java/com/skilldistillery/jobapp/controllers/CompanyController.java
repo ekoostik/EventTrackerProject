@@ -1,5 +1,6 @@
 package com.skilldistillery.jobapp.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,7 @@ public class CompanyController {
 	}
 
 	@PostMapping("company")
-	public Company addCompany(@RequestBody Company company, HttpServletRequest req, HttpServletResponse resp) {
+	public Company addCompany(Principal principal, @RequestBody Company company, HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			compSrvc.createCompany(company);
 			if (company == null) {
@@ -67,7 +68,7 @@ public class CompanyController {
 	}
 
 	@DeleteMapping("company/{id}")
-	public void deleteCompany(@PathVariable Integer id, HttpServletResponse resp) {
+	public void deleteCompany(Principal principal, @PathVariable Integer id, HttpServletResponse resp) {
 		try {
 			if (compSrvc.deleteCompany(id)) {
 				
@@ -84,7 +85,7 @@ public class CompanyController {
 	
 	
 	@PutMapping("company")
-	public Company updateCompany(@PathVariable Integer id, @RequestBody Company company, HttpServletResponse resp) {
+	public Company updateCompany(Principal principal, @PathVariable Integer id, @RequestBody Company company, HttpServletResponse resp) {
 		
 		try {
 			 company = compSrvc.updateCompany(id, company);
@@ -99,7 +100,7 @@ public class CompanyController {
 			return company;
 	}
 	@GetMapping("company/{id}/questions")
-	public List<Question> findAllQuestionsForCompany(@PathVariable Integer id){
+	public List<Question> findAllQuestionsForCompany(Principal principal, @PathVariable Integer id){
 		
 		return compSrvc.findAllQuestionsForCompany(id);
 	}

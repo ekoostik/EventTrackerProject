@@ -62,30 +62,7 @@ public class CompanyServiceImpl implements CompanyService {
 		return toUpdate;
 	}
 
-	@Override
-	public boolean deleteCompany(int id) {
-		boolean didDelete = false;
-		Company toDelete = compRepo.findById(id);
-		if (toDelete != null) {
-			if (toDelete.getOffer() != null) {
-				Offer off = offRepo.findById(toDelete.getOffer().getId());
-				toDelete.setOffer(null);
-				offRepo.delete(off);
-			}
-			if (!toDelete.getContacts().isEmpty()) {
-				List<Contact> contacts = contRepo.findByCompany_Id(toDelete.getId());
-				toDelete.setContacts(null);
-				for (Contact contact : contacts) {
-					contRepo.delete(contact);
-				}
-			}
-			compRepo.delete(toDelete);
-			didDelete = true;
 
-		}
-
-		return didDelete;
-	}
 
 	@Override
 	public List<Company> findAllActive(boolean active) {
@@ -104,6 +81,12 @@ public class CompanyServiceImpl implements CompanyService {
 		Company comp = compRepo.findById(id);
 
 		return comp.getQuestions();
+	}
+
+	@Override
+	public boolean deleteCompany(int id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

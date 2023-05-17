@@ -1,5 +1,6 @@
 package com.skilldistillery.jobapp.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,25 +22,24 @@ import com.skilldistillery.jobapp.services.OfferService;
 
 @RestController
 @RequestMapping("api")
-@CrossOrigin({"*", "http://localhost/"})
+@CrossOrigin({ "*", "http://localhost/" })
 public class OfferController {
 	@Autowired
 	private OfferService offSrvc;
-	
-	
-	
+
 	@GetMapping("offers")
-	public List<Offer> findAll(){
+	public List<Offer> findAll() {
 		return offSrvc.findAll();
 	}
-	
+
 	@GetMapping("offer/company/{id}")
 	public Offer findCompanyOffer(@PathVariable Integer id) {
 		return offSrvc.findByCompanyOfferId(id);
 	}
-	
+
 	@PostMapping("company/{id}/offer")
-	public Offer addOffer(@PathVariable Integer id, @RequestBody Offer offer, HttpServletResponse resp, HttpServletRequest req ) {
+	public Offer addOffer(Principal principal, @PathVariable Integer id, @RequestBody Offer offer,
+			HttpServletResponse resp, HttpServletRequest req) {
 		try {
 			offer = offSrvc.createOffer(id, offer);
 			if (offer == null) {
@@ -56,11 +56,9 @@ public class OfferController {
 
 		return offer;
 	}
-	
-	
-	
+
 	@DeleteMapping("delete/offer/{id}")
-	public void deleteCompany(@PathVariable Integer id, HttpServletResponse resp) {
+	public void deleteCompany(Principal principal, @PathVariable Integer id, HttpServletResponse resp) {
 		try {
 			if (offSrvc.deleteOffer(id)) {
 				resp.setStatus(200);
@@ -73,30 +71,22 @@ public class OfferController {
 
 		}
 	}
+
 	@PutMapping("update/offer/{id}")
-	public Offer updateOffer(@PathVariable Integer id, @RequestBody Offer offer, HttpServletResponse resp) {
-		
+	public Offer updateOffer(Principal principal, @PathVariable Integer id, @RequestBody Offer offer,
+			HttpServletResponse resp) {
+
 		try {
-			 offer = offSrvc.updateOffer(id, offer);
-			if(offer ==null) {
+			offer = offSrvc.updateOffer(id, offer);
+			if (offer == null) {
 				resp.setStatus(404);
 			}
-			}catch(Exception e){
-				e.printStackTrace();
-				resp.setStatus(400);
-				offer = null;
-			}
-			return offer;
+		} catch (Exception e) {
+			e.printStackTrace();
+			resp.setStatus(400);
+			offer = null;
+		}
+		return offer;
 	}
-	
-
-
-	
-	
-	
-	
-	
-	
-	
 
 }

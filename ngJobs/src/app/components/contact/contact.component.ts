@@ -16,6 +16,7 @@ export class ContactComponent implements OnInit {
 
     contacts: Contact[]=[];
 
+
   ngOnInit() {
   }
 

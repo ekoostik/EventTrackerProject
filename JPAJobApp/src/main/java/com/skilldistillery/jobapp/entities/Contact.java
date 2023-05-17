@@ -1,5 +1,6 @@
 package com.skilldistillery.jobapp.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -8,7 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Contact {
@@ -30,6 +35,14 @@ public class Contact {
 	
 	private String title;
 	
+	@JsonIgnore
+	@ManyToMany 
+	@JoinTable(name="Contact_has_User",
+	joinColumns=@JoinColumn(name="Contact_id"),
+	inverseJoinColumns=@JoinColumn(name="User_id"))
+	private List<User> users;
+	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="company_id")
 	private Company company;
@@ -101,6 +114,14 @@ public class Contact {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@Override

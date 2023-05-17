@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.jobapp.entities.Contact;
+import com.skilldistillery.jobapp.entities.User;
 import com.skilldistillery.jobapp.repositories.ContactRepository;
+import com.skilldistillery.jobapp.repositories.UserRepository;
 
 @Service
 public class ContactServiceImpl implements ContactService {
 
 	@Autowired
 	private ContactRepository contRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 
 	@Override
 	public List<Contact> findAll() {
@@ -77,6 +82,13 @@ public class ContactServiceImpl implements ContactService {
 	public List<Contact> findByLastName(String lastname) {
 		lastname= "%" + lastname + "%";
 		return contRepo.findByLastNameLike(lastname);
+	}
+
+	@Override
+	public List<Contact> findByUsername(String username) {
+		User user = userRepo.findByUsername(username);
+		// TODO Auto-generated method stub
+		return contRepo.findByUsers(user);
 	}
 
 }

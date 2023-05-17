@@ -6,7 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Offer {
@@ -25,8 +29,14 @@ public class Offer {
 	
 	private String holidays;
 	
-	@OneToOne(mappedBy="offer")
+	@ManyToOne
+	@JoinColumn(name="Company_id")
 	private Company company;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="User_id")
+	private User user;
 	
 	
 	public Offer() {
@@ -87,6 +97,14 @@ public class Offer {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

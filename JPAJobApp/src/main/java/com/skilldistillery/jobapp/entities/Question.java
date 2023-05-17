@@ -33,6 +33,13 @@ public class Question {
 	private List<Company>companies;
 	
 	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name="User_has_Question",
+	joinColumns=@JoinColumn(name="Question_id"),
+	inverseJoinColumns=@JoinColumn(name="User_id"))
+	private List<User>users;
+	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="category_id")
 	private Category category;
@@ -80,6 +87,14 @@ public class Question {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@Override

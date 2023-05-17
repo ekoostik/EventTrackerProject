@@ -2,23 +2,35 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Company } from '../models/company';
+import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
 
-  private baseUrl = 'http://localhost:8086/';
-  private url = this.baseUrl + 'api/company'
+  //private baseUrl = 'http://localhost:8086/';
+ // private url = this.baseUrl + 'api/company'
+ private url = environment.baseUrl+'api/company'
   constructor(
 
-    private http: HttpClient
-
+    private http: HttpClient,
+    private auth: AuthService
   ) { }
 
+  getHttpOptions() {
+    let options = {
+      headers: {
+        Authorization: 'Basic ' + this.auth.getCredentials(),
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    };
+    return options;
+  }
 
   index(): Observable<Company[]> {
-    return this.http.get<Company[]>(this.url).pipe(
+    return this.http.get<Company[]>(this.url, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

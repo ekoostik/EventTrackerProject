@@ -1,5 +1,6 @@
 package com.skilldistillery.jobapp.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,7 @@ public class QuestionController {
 		return questSrvc.findByCategory(id);
 	}
 	@DeleteMapping("delete/question/{id}")
-	public void deleteQuestion(@PathVariable Integer id, HttpServletResponse resp) {
+	public void deleteQuestion(Principal principal,@PathVariable Integer id, HttpServletResponse resp) {
 		try {
 			if (questSrvc.deleteQuestion(id)) {
 				resp.setStatus(200);
@@ -49,7 +50,7 @@ public class QuestionController {
 		}
 	}
 	@PostMapping("add/question")
-	public Question createQuestion(@RequestBody Question question, HttpServletResponse resp) {
+	public Question createQuestion(Principal principal,@RequestBody Question question, HttpServletResponse resp) {
 		try {
 			questSrvc.createQuestion(question);
 			if (question == null) {

@@ -12,4 +12,5 @@ public interface ContactService {
 	boolean deleteContact(int id);
 	List<Contact> findContactByCompany(int id);
 	List<Contact> findByLastName(String lastname);
+	List<Contact> findByUsername(String username);
 }

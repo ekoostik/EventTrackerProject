@@ -33,15 +33,7 @@ public class OfferServiceImpl implements OfferService {
 		return offRepo.findBySalaryBetween(low, high);
 	}
 
-	@Override
-	public Offer createOffer(int id, Offer offer) {
-		Company comp = compRepo.findById(id);
-		comp.setOffer(offer);
-		
-		offRepo.saveAndFlush(offer);
-		compRepo.saveAndFlush(comp);
-		return offer;
-	}
+
 
 	@Override
 	public Offer updateOffer(int id, Offer offer) {
@@ -72,12 +64,18 @@ public class OfferServiceImpl implements OfferService {
 		boolean didDelete = false;
 		Offer toDelete=offRepo.findById(id);
 		Company comp = compRepo.findById(toDelete.getCompany().getId());
-		comp.setOffer(null);
+		comp.setOffers(null);
 		if (toDelete != null) {
 			offRepo.delete(toDelete);
 			didDelete = true;
 		}
 
 		return didDelete;
+	}
+
+	@Override
+	public Offer createOffer(int id, Offer offer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
