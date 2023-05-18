@@ -1,4 +1,4 @@
-<h1>
+<h1 *ngIf="!selected">
    <span> Active Company Count: {{companyCount() }}</span>
 
 </h1><br>
@@ -132,6 +132,7 @@
 
           <td><input type="checkbox" name="remote" [(ngModel)]="editCompany.remote"></td>
           <td><input type="checkbox" name="active" [(ngModel)]="editCompany.active"></td>
+
           <td></td>
         </tr>
         <button (click)="cancel()">Cancel</button>

@@ -23,10 +23,9 @@ DROP TABLE IF EXISTS `Company` ;
 CREATE TABLE IF NOT EXISTS `Company` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `apply_date` DATETIME NOT NULL,
   `website` VARCHAR(45) NULL,
   `active` TINYINT NOT NULL,
-  `remote` TINYINT NULL,
+  `photo` VARCHAR(200) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -167,6 +166,8 @@ DROP TABLE IF EXISTS `User_has_Company` ;
 CREATE TABLE IF NOT EXISTS `User_has_Company` (
   `User_id` INT NOT NULL,
   `Company_id` INT NOT NULL,
+  `apply_date` DATETIME NULL,
+  `active` TINYINT NULL,
   PRIMARY KEY (`User_id`, `Company_id`),
   INDEX `fk_User_has_Company_Company1_idx` (`Company_id` ASC),
   INDEX `fk_User_has_Company_User1_idx` (`User_id` ASC),
@@ -246,12 +247,12 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jobdb`;
-INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`) VALUES (1, 'McDonalds', '2023-01-01', NULL, true, true);
-INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`) VALUES (2, 'Shotgun Willies Web Services', '2021-03-31', NULL, false, false);
-INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`) VALUES (3, 'Foogle', '2022-02-22', NULL, true, false);
-INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`) VALUES (4, 'Crockets Java Pro', '2023-01-20', NULL, true, true);
-INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`) VALUES (5, 'Dill Skstillery', '2023-04-29', NULL, true, true);
-INSERT INTO `Company` (`id`, `name`, `apply_date`, `website`, `active`, `remote`) VALUES (6, 'Eggolo', '2023-04-28', NULL, false, true);
+INSERT INTO `Company` (`id`, `name`, `website`, `active`, `photo`) VALUES (1, 'McDonalds', NULL, true, NULL);
+INSERT INTO `Company` (`id`, `name`, `website`, `active`, `photo`) VALUES (2, 'Shotgun Willies Web Services', NULL, false, NULL);
+INSERT INTO `Company` (`id`, `name`, `website`, `active`, `photo`) VALUES (3, 'Foogle', NULL, true, NULL);
+INSERT INTO `Company` (`id`, `name`, `website`, `active`, `photo`) VALUES (4, 'Crockets Java Pro', NULL, true, NULL);
+INSERT INTO `Company` (`id`, `name`, `website`, `active`, `photo`) VALUES (5, 'Dill Skstillery', NULL, true, NULL);
+INSERT INTO `Company` (`id`, `name`, `website`, `active`, `photo`) VALUES (6, 'Eggolo', NULL, false, NULL);
 
 COMMIT;
 
@@ -326,7 +327,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jobdb`;
-INSERT INTO `User` (`id`, `first_name`, `last_name`, `username`, `photo`, `create_date`, `enabled`, `password`, `role`) VALUES (1, 'David', 'Dunlevy', 'ekoostik', NULL, NULL, true, '$2a$10$nShOi5/f0bKNvHB8x0u3qOpeivazbuN0NE4TO0LGvQiTMafaBxLJS', 'user');
+INSERT INTO `User` (`id`, `first_name`, `last_name`, `username`, `photo`, `create_date`, `enabled`, `password`, `role`) VALUES (1, 'David', 'Dunlevy', 'ekoostik', NULL, '\n2023-05-15', true, '$2a$10$nShOi5/f0bKNvHB8x0u3qOpeivazbuN0NE4TO0LGvQiTMafaBxLJS', 'user');
 
 COMMIT;
 
@@ -349,12 +350,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jobdb`;
-INSERT INTO `User_has_Company` (`User_id`, `Company_id`) VALUES (1, 1);
-INSERT INTO `User_has_Company` (`User_id`, `Company_id`) VALUES (1, 2);
-INSERT INTO `User_has_Company` (`User_id`, `Company_id`) VALUES (1, 3);
-INSERT INTO `User_has_Company` (`User_id`, `Company_id`) VALUES (1, 4);
-INSERT INTO `User_has_Company` (`User_id`, `Company_id`) VALUES (1, 5);
-INSERT INTO `User_has_Company` (`User_id`, `Company_id`) VALUES (1, 6);
+INSERT INTO `User_has_Company` (`User_id`, `Company_id`, `apply_date`, `active`) VALUES (1, 1, '2023-01-01', true);
+INSERT INTO `User_has_Company` (`User_id`, `Company_id`, `apply_date`, `active`) VALUES (1, 2, '2021-03-31', true);
+INSERT INTO `User_has_Company` (`User_id`, `Company_id`, `apply_date`, `active`) VALUES (1, 3, '2022-02-22', false);
+INSERT INTO `User_has_Company` (`User_id`, `Company_id`, `apply_date`, `active`) VALUES (1, 4, '2023-01-20', true);
+INSERT INTO `User_has_Company` (`User_id`, `Company_id`, `apply_date`, `active`) VALUES (1, 5, '2023-04-29', false);
+INSERT INTO `User_has_Company` (`User_id`, `Company_id`, `apply_date`, `active`) VALUES (1, 6, '2023-04-28', true);
 
 COMMIT;
 

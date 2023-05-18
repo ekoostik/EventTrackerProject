@@ -11,7 +11,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
 	
 	Company findById(int id);
-	List<Company> findByActive(boolean active);
-	List<Company> findByRemote(boolean remote);
-	List<Company> findByOrderByApplyDateAsc();
+
+//	List<Company> findByOrderByApplyDateAsc();
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.skilldistillery.jobapp.entities.Company;
 import com.skilldistillery.jobapp.entities.Question;
+import com.skilldistillery.jobapp.entities.UserCompanies;
 
 public interface CompanyService {
 
@@ -13,7 +14,8 @@ public interface CompanyService {
 	Company createCompany(Company comp);
 	Company updateCompany(int id, Company comp);
 	boolean deleteCompany(int id);
-	List<Company> findAllActive(boolean active);
-	List<Company> findAllRemote(boolean remote);
+
+	
 	List<Question> findAllQuestionsForCompany(int id);
+	List<UserCompanies> findAllForUser(Integer id);
 }

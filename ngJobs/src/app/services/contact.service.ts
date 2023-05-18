@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Contact } from '../models/contact';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,22 @@ export class ContactService {
   private url = environment.baseUrl+'api/contact'
   constructor(
 
-    private http: HttpClient
+    private http: HttpClient,
+    private auth: AuthService
 
   ) { }
+  getHttpOptions() {
+    let options = {
+      headers: {
+        Authorization: 'Basic ' + this.auth.getCredentials(),
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    };
+    return options;
+  }
 
  index(): Observable<Contact[]> {
-  return this.http.get<Contact[]>(this.url).pipe(
+  return this.http.get<Contact[]>(this.url, this.getHttpOptions()).pipe(
     catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -32,7 +43,7 @@ export class ContactService {
 
 showForCompany(id:number):Observable<Contact[]>{
   console.log(id)
-  return this.http.get<Contact[]>(this.url+'/company/'+ id ).pipe(
+  return this.http.get<Contact[]>(this.url+'/company/'+ id, this.getHttpOptions() ).pipe(
     catchError((err: any)=>{
       console.error(err);
       return throwError(

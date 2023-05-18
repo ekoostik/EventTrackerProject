@@ -60,8 +60,8 @@
                   </tr>
 
 
-                  <tr *ngFor="let company of selected?.companies">
-                    <td *ngIf="company.active"> <a href="http://localhost:4200/company/{{company.id}}">{{company.name }}</a></td>
+                  <tr *ngFor="let company of compList">
+                    <td *ngIf="company.active"> <a [routerLink]="['/company/' + company.company?.id]">{{company.company?.name }}</a></td>
                     <td *ngIf="company.active">{{ company.applyDate | date : " MMMM d, y"}}</td>
                   </tr>
                 </table>
@@ -70,8 +70,8 @@
                   <br />
                   <label>Past Companies</label>
                   <tbody>
-                    <tr *ngFor="let company of selected?.companies">
-                      <td *ngIf="!company.active">{{ company.name }}</td>
+                    <tr *ngFor="let company of compList">
+                      <td *ngIf="!company.active"> <a [routerLink]="['/company/' + company.company?.id]">{{company.company?.name }}</a></td>
                     </tr>
                   </tbody>
                 </table>

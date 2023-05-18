@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { Company } from '../models/company';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
+import { UserCompanies } from '../models/userCompanies';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class CompanyService {
 
   create(company: Company): Observable<Company>{
     company.active= true;
-    return this.http.post<Company>(this.url, company).pipe(
+    return this.http.post<Company>(this.url, company, this.getHttpOptions()).pipe(
       catchError((err: any)=>{
         console.error(err);
         return throwError(
@@ -53,7 +54,7 @@ export class CompanyService {
   }
 
   update(company: Company): Observable<Company>{
-    return this.http.post<Company>(this.url, company).pipe(
+    return this.http.put<Company>(this.url + '/' + company.id , company,  this.getHttpOptions()).pipe(
       catchError((err: any)=>{
         console.error(err);
         return throwError(
@@ -65,7 +66,7 @@ export class CompanyService {
 
 
   destroy(id:number): Observable<void> {
-    return this.http.delete<void>(this.url+"/"+ id).pipe(
+    return this.http.delete<void>(this.url+"/"+ id, this.getHttpOptions()).pipe(
      catchError((err: any)=>{
        console.error(err);
        return throwError(
@@ -79,7 +80,7 @@ export class CompanyService {
  }
  show(id:number): Observable<Company>{
   console.log(id)
-  return this.http.get<Company>(this.url+"/"+ id).pipe(
+  return this.http.get<Company>(this.url+"/id/"+ id, this.getHttpOptions()).pipe(
     catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -89,7 +90,17 @@ export class CompanyService {
   );
 }
 
+getForUser(id:number):Observable<UserCompanies[]>{
 
+  return this.http.get<UserCompanies[]>(this.url+"/user/"+ id, this.getHttpOptions()).pipe(
+    catchError((err: any) => {
+      console.log(err);
+      return throwError(
+        () => new Error('companyService.index(): error retrieving Company: '+ id + err)
+      );
+    })
+  );
+}
 
 
 

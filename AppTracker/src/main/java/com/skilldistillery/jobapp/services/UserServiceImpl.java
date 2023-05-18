@@ -1,13 +1,13 @@
 package com.skilldistillery.jobapp.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.jobapp.entities.User;
+
 import com.skilldistillery.jobapp.repositories.UserRepository;
 
 @Service
@@ -15,6 +15,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepo;
+
+
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -65,5 +67,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userRepo.findAll();
 	}
+	
+	
 
 }

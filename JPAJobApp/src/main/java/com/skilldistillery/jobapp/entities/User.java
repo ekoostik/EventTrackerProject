@@ -45,8 +45,8 @@ public class User {
 	@ManyToMany(mappedBy = "users")
 	private List<Question> questions;
 
-	@ManyToMany(mappedBy = "users")
-	private List<Company> companies;
+//	@ManyToMany(mappedBy = "users")
+//	private List<Company> companies;
 
 	@OneToMany(mappedBy = "user")
 	private List<Offer> offers;
@@ -128,13 +128,13 @@ public class User {
 		this.questions = questions;
 	}
 
-	public List<Company> getCompanies() {
-		return companies;
-	}
-
-	public void setCompanies(List<Company> companies) {
-		this.companies = companies;
-	}
+//	public List<Company> getCompanies() {
+//		return companies;
+//	}
+//
+//	public void setCompanies(List<Company> companies) {
+//		this.companies = companies;
+//	}
 
 	public List<Offer> getOffers() {
 		return offers;

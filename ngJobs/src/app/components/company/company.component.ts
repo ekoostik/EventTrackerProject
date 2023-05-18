@@ -1,9 +1,11 @@
+import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from 'src/app/models/company';
 import { CompanyService } from 'src/app/services/company.service';
 import { ContactService } from 'src/app/services/contact.service';
 import { ActivePipe } from '../../pipes/active.pipe';
+import { UserCompanies } from 'src/app/models/userCompanies';
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
@@ -24,9 +26,21 @@ editCompany: Company | null = null;
 showActive = false;
 addCompany = false;
 hideButton = false;
+compList: UserCompanies []=[];
 
 ngOnInit(): void {
+  let selectedCompany = Number(
+    this.route.snapshot.paramMap.get('id')
+  );
+  if(selectedCompany){
+    this.compServ.show(selectedCompany).subscribe({
+      next:(comp)=>{
+        this.selectCompany(comp)
+      }
+    })
+  }else{
   this.reload();
+  }
 }
 
 
@@ -40,6 +54,20 @@ reload(){
       console.log('ohh no');
     }
   })
+}
+
+usersCompanies(id: number){
+this.compServ.getForUser(id).subscribe({
+  next:(compList)=>{
+    this.compList = compList;
+  }
+
+})
+
+
+
+
+
 }
 
 selectCompany(comp: Company){
@@ -70,6 +98,7 @@ createCompany(company: Company){
 
 
  updateCompany(company:Company){
+
   this.compServ.update(company).subscribe({
     next:(comp)=>{
 
@@ -104,6 +133,7 @@ createCompany(company: Company){
  setEditCompany(){
   this.hideButton=true;
   this.editCompany = Object.assign({}, this.selected)
+  console.log(this.editCompany);
  }
 
  cancel(){

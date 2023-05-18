@@ -10,4 +10,5 @@ public interface UserService {
 	User findByUsername(String username);
 	User deactivate(String username);
 	List<User> findAll();
+	
 }

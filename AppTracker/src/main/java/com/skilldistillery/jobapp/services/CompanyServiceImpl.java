@@ -6,29 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.jobapp.entities.Company;
-import com.skilldistillery.jobapp.entities.Contact;
-import com.skilldistillery.jobapp.entities.Offer;
 import com.skilldistillery.jobapp.entities.Question;
+import com.skilldistillery.jobapp.entities.UserCompanies;
 import com.skilldistillery.jobapp.repositories.CompanyRepository;
-import com.skilldistillery.jobapp.repositories.ContactRepository;
-import com.skilldistillery.jobapp.repositories.OfferRepository;
+import com.skilldistillery.jobapp.repositories.UserCompaniesRepository;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
+	
+
+	
 	@Autowired
 	private CompanyRepository compRepo;
 
 	@Autowired
-	private OfferRepository offRepo;
+	private UserCompaniesRepository userComp;
 
-	@Autowired
-	private ContactRepository contRepo;
-
-	@Override
-	public List<Company> findAll() {
-
-		return compRepo.findByOrderByApplyDateAsc();
-	}
+	
 
 	@Override
 	public Company findById(int id) {
@@ -44,16 +38,16 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Company updateCompany(int id, Company comp) {
 		Company toUpdate = compRepo.findById(id);
+		System.out.println(toUpdate);
 		if (toUpdate != null) {
 			if (comp.getName() != null) {
 				toUpdate.setName(comp.getName());
 			}
-			if (comp.getApplyDate() != null) {
-				toUpdate.setApplyDate(comp.getApplyDate());
-			}
+		
 			if (comp.getWebsite() != null) {
 				toUpdate.setWebsite(comp.getWebsite());
 			}
+			
 
 			toUpdate.setActive(comp.isActive());
 
@@ -64,17 +58,6 @@ public class CompanyServiceImpl implements CompanyService {
 
 
 
-	@Override
-	public List<Company> findAllActive(boolean active) {
-
-		return compRepo.findByActive(active);
-	}
-
-	@Override
-	public List<Company> findAllRemote(boolean remote) {
-
-		return compRepo.findByRemote(remote);
-	}
 
 	@Override
 	public List<Question> findAllQuestionsForCompany(int id) {
@@ -87,6 +70,18 @@ public class CompanyServiceImpl implements CompanyService {
 	public boolean deleteCompany(int id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<UserCompanies> findAllForUser(Integer id) {
+		// TODO Auto-generated method stub
+		return userComp.findByIdUserId(id);
+	}
+
+	@Override
+	public List<Company> findAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

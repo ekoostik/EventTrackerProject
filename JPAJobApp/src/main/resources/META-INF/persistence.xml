@@ -8,6 +8,8 @@
 	
 	
 	<!-- begin entities -->
+	<class>com.skilldistillery.jobapp.entities.UserCompaniesId</class>
+	<class>com.skilldistillery.jobapp.entities.UserCompanies</class>
 	<class>com.skilldistillery.jobapp.entities.User</class>
 	<class>com.skilldistillery.jobapp.entities.Company</class>
 	<class>com.skilldistillery.jobapp.entities.Contact</class>

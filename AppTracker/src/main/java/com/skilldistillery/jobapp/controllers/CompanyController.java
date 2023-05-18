@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.jobapp.entities.Company;
 import com.skilldistillery.jobapp.entities.Question;
+import com.skilldistillery.jobapp.entities.UserCompanies;
 import com.skilldistillery.jobapp.services.CompanyService;
 
 @RestController
 @RequestMapping("api")
-@CrossOrigin({"*", "http://localhost/"})
+@CrossOrigin({ "*", "http://localhost/" })
 public class CompanyController {
 	@Autowired
 	private CompanyService compSrvc;
@@ -34,24 +35,17 @@ public class CompanyController {
 		return compSrvc.findAll();
 	}
 
-	@GetMapping("company/{id}")
+	@GetMapping("company/id/{id}")
 	public Company findCompanyById(@PathVariable Integer id) {
 
 		return compSrvc.findById(id);
 	}
-	@GetMapping("company/{active}")
-	public List<Company> findCompanyByActive(@PathVariable Boolean active) {
-		
-		return compSrvc.findAllActive(active);
-	}
-	@GetMapping("company/remote/{remote}")
-	public List<Company> findCompanyByRemote(@PathVariable Boolean remote) {
-		
-		return compSrvc.findAllRemote(remote);
-	}
+
+
 
 	@PostMapping("company")
-	public Company addCompany(Principal principal, @RequestBody Company company, HttpServletRequest req, HttpServletResponse resp) {
+	public Company addCompany(Principal principal, @RequestBody Company company, HttpServletRequest req,
+			HttpServletResponse resp) {
 		try {
 			compSrvc.createCompany(company);
 			if (company == null) {
@@ -71,7 +65,7 @@ public class CompanyController {
 	public void deleteCompany(Principal principal, @PathVariable Integer id, HttpServletResponse resp) {
 		try {
 			if (compSrvc.deleteCompany(id)) {
-				
+
 				resp.setStatus(200);
 			} else {
 				resp.setStatus(204);
@@ -82,28 +76,35 @@ public class CompanyController {
 
 		}
 	}
-	
-	
-	@PutMapping("company")
-	public Company updateCompany(Principal principal, @PathVariable Integer id, @RequestBody Company company, HttpServletResponse resp) {
-		
+
+	@PutMapping("company/{id}")
+	public Company updateCompany(Principal principal, @PathVariable Integer id, @RequestBody Company company,
+			HttpServletResponse resp) {
+
 		try {
-			 company = compSrvc.updateCompany(id, company);
-			if(company ==null) {
+
+			company = compSrvc.updateCompany(id, company);
+			if (company == null) {
 				resp.setStatus(404);
 			}
-			}catch(Exception e){
-				e.printStackTrace();
-				resp.setStatus(400);
-				company = null;
-			}
-			return company;
+		} catch (Exception e) {
+			e.printStackTrace();
+			resp.setStatus(400);
+			company = null;
+		}
+		return company;
 	}
+
 	@GetMapping("company/{id}/questions")
-	public List<Question> findAllQuestionsForCompany(Principal principal, @PathVariable Integer id){
-		
+	public List<Question> findAllQuestionsForCompany(Principal principal, @PathVariable Integer id) {
+
 		return compSrvc.findAllQuestionsForCompany(id);
 	}
-	
+
+	@GetMapping("company/user/{id}")
+	public List<UserCompanies> findAllForUser(Principal principal, @PathVariable Integer id, HttpServletResponse resp) {
+		return compSrvc.findAllForUser(id);
+
+	}
 
 }
