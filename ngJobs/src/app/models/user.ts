@@ -1,5 +1,6 @@
 import { Company } from 'src/app/models/company';
 import { Questions } from "./questions";
+import { Offer } from './offer';
 
 export class User {
 
@@ -14,7 +15,7 @@ password: string;
 role: string;
 questions: any[] | null;
 companies: any[] | null;
-offers: any[] | null;
+offers: Offer [] | null;
 contacts: any[] | null;
 
 constructor(
@@ -30,7 +31,7 @@ constructor(
   role: string='',
   questions: any[] =[],
   companies: any[] =[],
-  offers: any[] =[],
+  offers: Offer[] =[],
   contacts: any []=[]
 
 ){

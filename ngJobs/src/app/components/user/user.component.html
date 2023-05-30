@@ -20,6 +20,7 @@
           <p class="proile-rating">
             Joined {{ selected?.createDate | date : " MMMM d, y" }}
           </p>
+
         </div>
       </div>
       <div class="col-md-2">
@@ -41,7 +42,7 @@
           <a href="http://localhost:4200/contact">Contacts</a>
         </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-6">
         <div class="tab-content profile-tab" id="myTabContent">
           <div
             class="tab-pane fade show active"
@@ -57,13 +58,18 @@
                   <tr>
                     <th>Name</th>
                     <th>Apply Date</th>
+
+
                   </tr>
 
 
                   <tr *ngFor="let company of compList">
                     <td *ngIf="company.active"> <a [routerLink]="['/company/' + company.company?.id]">{{company.company?.name }}</a></td>
                     <td *ngIf="company.active">{{ company.applyDate | date : " MMMM d, y"}}</td>
-                  </tr>
+
+
+
+
                 </table>
                 <br />
                 <table>
@@ -76,11 +82,13 @@
                   </tbody>
                 </table>
               </div>
+
             </div>
           </div>
 
         </div>
       </div>
+
     </div>
   </form>
 </div>
