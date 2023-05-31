@@ -9,6 +9,7 @@ export class Contact {
   email: string;
   title: string;
   company: Company;
+  users: any[] | undefined;
 
   constructor(
     id: number =0,
@@ -17,7 +18,9 @@ export class Contact {
     phone: string='',
     email: string ='',
     title: string ='',
-    company: Company
+    company: Company,
+    users: any []=[],
+
 
   ){
 
@@ -28,6 +31,7 @@ export class Contact {
   this.email=email;
   this.title=title ;
   this.company=company;
+  this.users=users;
   }
 
 }

@@ -1,6 +1,8 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from 'src/app/models/contact';
+import { User } from 'src/app/models/user';
 import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
@@ -11,13 +13,17 @@ import { ContactService } from 'src/app/services/contact.service';
 export class ContactComponent implements OnInit {
 
   constructor(private contactSrvc: ContactService ,private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router, private auth: AuthService,) { }
 
 
     contacts: Contact[]=[];
+    user: User = new User();
+
 
 
   ngOnInit() {
+    this.getLoggedInUser();
+    this.userContacts();
   }
 
 
@@ -29,6 +35,27 @@ export class ContactComponent implements OnInit {
 
     })
 
+  }
+
+  userContacts(){
+
+    this.contactSrvc.findForUser(this.user).subscribe({
+      next:(contacts)=>{
+        this.contacts=contacts;
+      }
+    })
+  }
+
+  getLoggedInUser(){
+    this.auth.getLoggedInUser().subscribe({
+      next:(foundUser) =>{
+        this.user = foundUser;
+
+
+      }
+
+
+  })
   }
 
 }

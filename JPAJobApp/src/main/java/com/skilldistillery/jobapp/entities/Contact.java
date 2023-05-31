@@ -42,7 +42,7 @@ public class Contact {
 	inverseJoinColumns=@JoinColumn(name="User_id"))
 	private List<User> users;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name="company_id")
 	private Company company;

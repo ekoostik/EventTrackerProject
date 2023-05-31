@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { Contact } from '../models/contact';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +55,16 @@ showForCompany(id:number):Observable<Contact[]>{
    );
 }
 
-
+findForUser(user:User):Observable<Contact[]>{
+  return this.http.get<Contact[]>(this.url+'s/'+ user.username, this.getHttpOptions() ).pipe(
+    catchError((err: any)=>{
+      console.error(err);
+      return throwError(
+        ()=> new Error('contactService.delete(): error getting contacts')
+      )
+    })
+  );
+}
 
 
 

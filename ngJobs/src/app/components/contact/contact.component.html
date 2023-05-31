@@ -1,3 +1,23 @@
 <p>
-  contact works!
+  My Contacts
 </p>
+
+<table class="table table-striped" >
+  <thead>
+    <h3>Contacts:</h3>
+    <tr>
+      <td>Company: </td>
+      <td>Name: </td>
+      <td>Phone: </td>
+      <td>Email </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let contact of contacts" >
+      <td>{{contact.company.name}}</td>
+      <td>{{contact.firstName}} {{contact.lastName}}</td>
+      <td> {{contact.phone}}</td>
+      <td> {{contact.email}}</td>
+      </tr>
+  </tbody>
+</table>
