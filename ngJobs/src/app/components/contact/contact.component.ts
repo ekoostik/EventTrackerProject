@@ -23,7 +23,8 @@ export class ContactComponent implements OnInit {
 
   ngOnInit() {
     this.getLoggedInUser();
-    this.userContacts();
+
+
   }
 
 
@@ -37,20 +38,18 @@ export class ContactComponent implements OnInit {
 
   }
 
-  userContacts(){
-
-    this.contactSrvc.findForUser(this.user).subscribe({
-      next:(contacts)=>{
-        this.contacts=contacts;
-      }
-    })
-  }
 
   getLoggedInUser(){
     this.auth.getLoggedInUser().subscribe({
       next:(foundUser) =>{
         this.user = foundUser;
+        console.log(foundUser);
+        this.contactSrvc.findForUser(this.user).subscribe({
 
+          next:(contacts)=>{
+            this.contacts=contacts;
+          }
+        })
 
       }
 
