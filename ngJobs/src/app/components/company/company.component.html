@@ -11,7 +11,7 @@
       <td>Id</td>
       <td>Name</td>
       <td>Apply Date</td>
-      <td>Active</td>
+
 
     </tr>
   </thead>
@@ -19,9 +19,8 @@
     <tr   *ngFor="let company of companies">
       <td >{{company.id}}</td>
       <td (click)="selectCompany(company)">{{company.name}}</td>
-      <td>{{company.applyDate}}</td>
-      <td *ngIf="company.active">YES</td>
-      <td></td>
+      <td>{{ company.applyDate | date : " MMMM d, y"}}</td>
+
     </tr>
 
   </tbody>
